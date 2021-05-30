@@ -1,0 +1,12 @@
+/node_modules
+npm-debug.log
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+**/.yarn/*
+!**/.yarn/releases
+!**/.yarn/plugins
+!**/.yarn/sdks
+!**/.yarn/versions
+sum.js
+sum.test.js

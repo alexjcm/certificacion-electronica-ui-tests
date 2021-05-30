@@ -1,0 +1,24 @@
+= Pruebas unitarias de funciones JavaScript con Jest 
+
+== Cómo empezar
+
+Instalar Jest usando npm:
+
+[source, bash]
+----
+npm install --save-dev jest
+----
+
+
+== Cómo ejecutar las pruebas
+
+Eejecute  el comando `npm run test` or `npm test` para ejecutar las pruebas y al final Jest imprimirá este mensaje:
+[source, bash]
+----
+Test Suites: 3 passed, 3 total
+Tests:       36 passed, 36 total
+----
+
+== Licencia
+
+Jest tiene link:LICENSE[licencia MIT.]
