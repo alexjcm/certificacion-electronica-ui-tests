@@ -8,5 +8,3 @@ package-lock.json
 !**/.yarn/plugins
 !**/.yarn/sdks
 !**/.yarn/versions
-sum.js
-sum.test.js

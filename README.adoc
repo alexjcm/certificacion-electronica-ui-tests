@@ -15,10 +15,10 @@ npm install --save-dev jest
 Eejecute  el comando `npm run test` or `npm test` para ejecutar las pruebas y al final Jest imprimirá este mensaje:
 [source, bash]
 ----
-Test Suites: 3 passed, 3 total
-Tests:       36 passed, 36 total
+Test Suites: 2 passed, 2 total
+Tests:       28 passed, 28 total
 ----
 
 == Licencia
 
-Jest tiene link:LICENSE[licencia MIT.]
+LICENSE[licencia MIT.]

@@ -1,6 +1,6 @@
 {
-  "name": "tests-mce",
-  "version": "1.0.0",
+  "name": "tests-ui-mce",
+  "version": "0.1.0",
   "description": "",
   "scripts": {
     "test": "jest"
@@ -8,7 +8,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^26.6.3"
+    "jest": "^27.0.6"
   },
   "jest": {
     "verbose": true
