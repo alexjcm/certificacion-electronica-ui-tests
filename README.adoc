@@ -1,6 +1,11 @@
-= Pruebas unitarias de funciones JavaScript con Jest 
+= Pruebas unitarias con Jest 
 
-== Cómo empezar
+image:https://github.com/alexjcm/certificacion-electronica-ui-tests/actions/workflows/test.yml/badge.svg[Test, link=https://github.com/alexjcm/certificacion-electronica-ui-tests/actions/workflows/test.yml]
+image:https://img.shields.io/badge/License-MIT-blue.svg[License: MIT, link=https://opensource.org/licenses/MIT] 
+
+Pruebas unitarias con Jest para las funciones javascript utilizadas en la UI del Módulo de Certificación Electrónica (MCE).
+
+== Instalación
 
 Instalar Jest usando npm:
 
@@ -10,15 +15,24 @@ npm install --save-dev jest
 ----
 
 
-== Cómo ejecutar las pruebas
+== Ejecución de pruebas unitarias
 
-Eejecute  el comando `npm run test` or `npm test` para ejecutar las pruebas y al final Jest imprimirá este mensaje:
+Ejecute  el siguiente comando para ejecutar las pruebas unitarias:
+
 [source, bash]
+----
+npm test
+----
+
+Al final Jest imprimirá un mensaje similar al siguiente:
+
 ----
 Test Suites: 2 passed, 2 total
 Tests:       28 passed, 28 total
+Time:        0.307 s, estimated 1 s
+Ran all test suites.
 ----
 
 == Licencia
 
-LICENSE[licencia MIT.]
+Revise el archivo <<LICENSE, LICENSE>> para más detalles.
