@@ -1,4 +1,4 @@
-= Pruebas unitarias con Jest 
+= Pruebas unitarias de funciones javascript con Jest 
 
 image:https://github.com/alexjcm/certificacion-electronica-ui-tests/actions/workflows/test.yml/badge.svg[Test, link=https://github.com/alexjcm/certificacion-electronica-ui-tests/actions/workflows/test.yml]
 image:https://img.shields.io/badge/License-MIT-blue.svg[License: MIT, link=https://opensource.org/licenses/MIT] 
@@ -35,4 +35,4 @@ Ran all test suites.
 
 == Licencia
 
-Revise el archivo <<LICENSE, LICENSE>> para más detalles.
+Revise el archivo link:LICENSE[LICENSE] para más detalles.
