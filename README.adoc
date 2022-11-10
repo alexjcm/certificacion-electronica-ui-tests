@@ -7,11 +7,11 @@ Pruebas unitarias con Jest para las funciones javascript utilizadas en la UI del
 
 == Instalación
 
-Instalar Jest usando npm:
+Ejecute el siguiente comando para instalar las dependencias necesarias:
 
 [source, bash]
 ----
-npm install --save-dev jest
+npm install
 ----
 
 
@@ -28,8 +28,8 @@ Al final Jest imprimirá un mensaje similar al siguiente:
 
 ----
 Test Suites: 2 passed, 2 total
-Tests:       28 passed, 28 total
-Time:        0.307 s, estimated 1 s
+Tests:       26 passed, 26 total
+Time:        0.262 s, estimated 1 s
 Ran all test suites.
 ----
 

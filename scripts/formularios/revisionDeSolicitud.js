@@ -1,8 +1,8 @@
-const revisionData = {
-  etiquetaComentario: "Comentario",
-  estados: {
-    aprobada:"Aprobada", 
-    rechazada: "Rechazada"
+const constants = {
+  LABEL_COMMENT: "Comentario",
+  state: {
+    APROVED: "Aprobada",
+    REJECTED: "Rechazada"
   }
 };
 /**
@@ -12,9 +12,9 @@ const revisionData = {
  * @return {string}
  */
 function getChangeTagComentarios(estadoSeleccionado) {
-  return estadoSeleccionado === revisionData.estados.aprobada
-    ? revisionData.etiquetaComentario + " (opcional)"
-    : revisionData.etiquetaComentario;
+  return estadoSeleccionado === constants.state.APROVED
+    ? constants.LABEL_COMMENT + " (opcional)"
+    : constants.LABEL_COMMENT;
 }
 
 /**
@@ -25,7 +25,7 @@ function getChangeTagComentarios(estadoSeleccionado) {
  * @return {string}
  */
 function getChangeButtonLabel(estadoSeleccionado) {
-  return estadoSeleccionado === revisionData.estados.rechazada ? "Rechazar" : "Aprobar";
+  return estadoSeleccionado === constants.state.REJECTED ? "Rechazar" : "Aprobar";
 }
 
 /**

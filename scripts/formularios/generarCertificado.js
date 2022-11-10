@@ -1,5 +1,6 @@
 /**
- * Retorna true si la fecha de inicio es menor a la fecha de fin. *
+ * Retorna true si la fecha de inicio es menor a la fecha de fin.
+ * 
  * @param {object}
  * @param {object}
  * @return {boolean}
@@ -12,6 +13,7 @@ function fechasValid(fechaInicio, fechaFin) {
 
 /**
  * Valores de la respuesta cuando la llamada falla.
+ * 
  * @param {string} Valores de la respuesta fallida.
  * @return {string}
  */

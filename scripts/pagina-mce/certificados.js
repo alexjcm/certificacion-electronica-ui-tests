@@ -1,66 +1,44 @@
-const listaFuncionariosQueFirman = [
+const LIST_FUNCTIONARY_SIGNING = [
   "Firman la Secretaria y el Gestor",
   "Firma el Gestor",
 ];
 
 /**
- * Este script ayuda a seleccionar automaticamente cualquier de las
+ * Este script ayuda a seleccionar automaticamente cualquiera de las 
  * siguientes opciones:
- *     - "Firma la Secretaria y el Gestor"
- *     - "Firma el Gestor"
- * según sea el caso de acuerdo a la fila seleccionada (con un idCert > 4) de la tabla Certificados.
- *
+ *     - "Secretaria de la carrera y el Gestor/Director de la carrera"
+ *     - "Gestor/Director de la carrera"
+ * según sea el caso de acuerdo a la fila seleccionada (con un idCert > TOTAL_INITIAL_CERTIFICATES) de la tabla Certificados
+ * donde TOTAL_INITIAL_CERTIFICATES es el número total de certificados iniciales
+ * 
+ * @param {object}
  * @return {string}
  */
-function tempQuienFirma(objetoCertificado_selectedCopia) {
-  var noFirmaDecano =
-    objetoCertificado_selectedCopia.firmaSecretaria &&
-    objetoCertificado_selectedCopia.firmaGestor &&
-    objetoCertificado_selectedCopia.firmaDecano === false;
+function tempQuienFirma(certificadoSelected) {
+  var noFirmaDecano = certificadoSelected.firmaSecretaria &&
+    certificadoSelected.firmaGestor &&
+    certificadoSelected.firmaDecano === false;
   if (noFirmaDecano) {
-    return listaFuncionariosQueFirman[0];
+    return LIST_FUNCTIONARY_SIGNING[0];
   }
-  var soloFirmaGestor =
-    objetoCertificado_selectedCopia.firmaGestor &&
-    objetoCertificado_selectedCopia.firmaSecretaria === false &&
-    objetoCertificado_selectedCopia.firmaDecano === false;
+  var soloFirmaGestor = certificadoSelected.firmaGestor &&
+    certificadoSelected.firmaSecretaria === false &&
+    certificadoSelected.firmaDecano === false;
   if (soloFirmaGestor) {
-    return listaFuncionariosQueFirman[1];
+    return LIST_FUNCTIONARY_SIGNING[1];
   }
 }
 
 /**
- * Devuelve la URL de la API para crear una instancia del proceso: Crear Certificado Academico.
+ * Devuelve la URL de la API para crear una instancia del proceso: Crear o Editar Certificado.
  *
+ * @param {object}
  * @return {string}
  */
-function urlCrearCertificadoProceso(crearOEditarCertificadoProceso) {
-  if (
-    crearOEditarCertificadoProceso &&
-    crearOEditarCertificadoProceso.length > 0
-  ) {
+function urlCrearOEditarCertificadoProceso(certificadoSeleccionado) {
+  if (certificadoSeleccionado && certificadoSeleccionado.length > 0) {
     return (
-      "../API/bpm/process/" +
-      crearOEditarCertificadoProceso[0].id +
-      "/instantiation"
-    );
-  }
-}
-
-/**
- * Devuelve la URL de la API para crear una instancia del proceso: Editar Certificado Academico.
- *
- * @return {string}
- */
-function urlEditarCertificadoProceso(crearOEditarCertificadoProceso) {
-  if (
-    crearOEditarCertificadoProceso &&
-    crearOEditarCertificadoProceso.length > 0
-  ) {
-    return (
-      "../API/bpm/process/" +
-      crearOEditarCertificadoProceso[0].id +
-      "/instantiation"
+      "../API/bpm/process/" + certificadoSeleccionado[0].id + "/instantiation"
     );
   }
 }
@@ -68,67 +46,52 @@ function urlEditarCertificadoProceso(crearOEditarCertificadoProceso) {
 /**
  * Permite validar si todos los campos del formulario correspondiente han sido llenados,
  * retorna 'false' si todos los campos fueron llenados.
- * No tomamos en cuenta a 'idCert' porque en el 'getCertificadoPayload()' lo generamos
- * y seteamos localmente.
- *
+ * 
+ * @param {Boolean}
+ * @param {object}
  * @return {boolean}
  */
-function formErrorCertificadoIncompleto(certificadosData) {
-  var certIncompleto =
-    !certificadosData.nombre ||
-    !certificadosData.descripcion ||
-    !certificadosData.auxQuienFirma;
-  return certIncompleto;
-}
+function formErrorCrearOEditarCertificadoIncompleto(isEditing, certificado) {
+  var certificateIncomplete = null
+  if (isEditing) {
+    var certificateIncomplete = !certificado.nombre || !certificado.descripcion || !certificado.auxQuienFirma;
+    return certificateIncomplete;
+  }
 
-/**
- * Permite validar si todos los campos del formulario correspondiente ha sido llenados,
- * retorna 'false' si todos los campos fueron llenados.
- *
- * @return {boolean}
- */
-function formErrorEditarCertificadoIncompleto(objetoCertificado_selectedCopia) {
-  var certEditImcompleto =
-    !objetoCertificado_selectedCopia.idCert ||
-    !objetoCertificado_selectedCopia.nombre ||
-    !objetoCertificado_selectedCopia.descripcion;
-  if (objetoCertificado_selectedCopia.idCert > 4) {
+  certificateIncomplete = !certificado.idCert || !certificado.nombre || !certificado.descripcion;
+  if (certificado.idCert > 4) {
     return (
-      certEditImcompleto || !tempQuienFirma(objetoCertificado_selectedCopia)
+      certificateIncomplete || !tempQuienFirma(certificado)
     );
   }
-  return certEditImcompleto;
+  return certificateIncomplete;
 }
 
 /**
  * Retorna los datos a enviar para rellenar el contrato.
- *
+ * 
+ * @param {object}
+ * @param {String}
  * @param {object}
  * @return {json}
  */
-function getCertificadoPayload(
-  contratoCertificadoNuevo,
-  auxQuienFirma,
-  objetoCertificado
-) {
-  if (auxQuienFirma === listaFuncionariosQueFirman[0]) {
+function getCertificadoPayload(contratoCertificadoNuevo, auxQuienFirma, objetoCertificado) {
+  if (auxQuienFirma === LIST_FUNCTIONARY_SIGNING[0]) {
     contratoCertificadoNuevo.firmaSecretaria = true;
     contratoCertificadoNuevo.firmaGestor = true;
     contratoCertificadoNuevo.firmaDecano = false;
-  } else if (auxQuienFirma === listaFuncionariosQueFirman[1]) {
+  } else if (auxQuienFirma === LIST_FUNCTIONARY_SIGNING[1]) {
     contratoCertificadoNuevo.firmaGestor = true;
     contratoCertificadoNuevo.firmaSecretaria = false;
     contratoCertificadoNuevo.firmaDecano = false;
   }
 
   var sizeListaObjCertificados = objetoCertificado.length;
-  // Aumentamos en 1 el resultado anterior para obtener el idCert del futuro nuevo certificado
   var idCertAutoIncremento = sizeListaObjCertificados + 1;
   contratoCertificadoNuevo.idCert = idCertAutoIncremento;
 
   return {
     contratoCertificadoNuevo: contratoCertificadoNuevo,
-    // se va a retornar tambien el sigiente contrato vacios porque esta funcion es para Crear certificados
     contratoCertificadoEdit: {
       idCert: null,
       nombre: "",
@@ -144,22 +107,18 @@ function getCertificadoPayload(
  * Retorna los datos a enviar para rellenar el contrato.
  *
  * @param {object}
+ * @param {object}
  * @return {json}
  */
-function getCertificadoEditPayload(
-  certificadoEdit,
-  objetoCertificado_selectedCopia
-) {
+function getCertificadoEditPayload(certificadoEdit, certificadoSelected) {
   if (
-    tempQuienFirma(objetoCertificado_selectedCopia) ===
-    listaFuncionariosQueFirman[0]
+    tempQuienFirma(certificadoSelected) === LIST_FUNCTIONARY_SIGNING[0]
   ) {
     certificadoEdit.firmaSecretaria = true;
     certificadoEdit.firmaGestor = true;
     certificadoEdit.firmaDecano = false;
   } else if (
-    tempQuienFirma(objetoCertificado_selectedCopia) ===
-    listaFuncionariosQueFirman[1]
+    tempQuienFirma(certificadoSelected) === LIST_FUNCTIONARY_SIGNING[1]
   ) {
     certificadoEdit.firmaGestor = true;
     certificadoEdit.firmaSecretaria = false;
@@ -174,7 +133,6 @@ function getCertificadoEditPayload(
       firmaGestor: certificadoEdit.firmaGestor,
       firmaDecano: certificadoEdit.firmaDecano,
     },
-    // Se va a retorna tambien  el siguiente contrato vacio porque esta funcion es para Editar certificados
     contratoCertificadoNuevo: {
       idCert: null,
       nombre: "",
@@ -188,10 +146,8 @@ function getCertificadoEditPayload(
 
 module.exports = {
   tempQuienFirma,
-  urlCrearCertificadoProceso,
-  urlEditarCertificadoProceso,
-  formErrorCertificadoIncompleto,
-  formErrorEditarCertificadoIncompleto,
+  urlCrearOEditarCertificadoProceso,
+  formErrorCrearOEditarCertificadoIncompleto,
   getCertificadoPayload,
   getCertificadoEditPayload,
 };

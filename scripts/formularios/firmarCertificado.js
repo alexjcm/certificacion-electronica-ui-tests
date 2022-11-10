@@ -1,7 +1,7 @@
-const firmarData = {
-  urlServidorPre: "http://localhost:8180",
-  urlServidorProd: "http://190.96.96.153:7776",
-  rutaAbsolutaDocs: '/opt/wildfly-static/',
+const constants = {
+  URL_SERVER_PRE: "https://pruebasmce.info",
+  URL_SERVER_PROD: "https://ciscunl.info",
+  ABSOLUTE_PATH_DOCUMENTS: '/opt/wildfly-static/',
 };
 
 /**
@@ -26,7 +26,7 @@ function getFirmarPayload(rutaExternaDelDocFirmado) {
 function rutaExternaDelDocFirmado(nombrePdf) {
   var nombrePdfAnterior = nombrePdf;
   var nuevoNombreDePdf = nombrePdfAnterior.replace(".pdf", "-signed.pdf");
-  var rutaCompletaDeNuevoPdf = firmarData.rutaAbsolutaDocs + nuevoNombreDePdf;
+  var rutaCompletaDeNuevoPdf = constants.ABSOLUTE_PATH_DOCUMENTS + nuevoNombreDePdf;
 
   // retorna una ruta como esta: /opt/wildfly-static/certificado-signed.pdf
   return rutaCompletaDeNuevoPdf;
@@ -57,9 +57,8 @@ function urlParaIniciarFirmaEC(
     var isProduction = valorParametroEsProduccion.value;
     if (isProduction === "true") {
       // URL PRODUCCION
-      const urlApiProd = "&url=" + firmarData.urlServidorProd + "/api";
-      linkGenerado =
-        "firmaec://" +
+      const urlApiProd = "&url=" + constants.URL_SERVER_PROD + "/api";
+      linkGenerado = "firmaec://" +
         nombreDelSistema +
         "/firmar?token=" +
         miToken +
@@ -67,10 +66,9 @@ function urlParaIniciarFirmaEC(
         urlApiProd +
         tipoEstampado +
         "&pre=true";
-    } else {   
-      const urlApiPre = "&url=" + firmarData.urlServidorPre + "/api";
-      linkGenerado =
-        "firmaec://" +
+    } else {
+      const urlApiPre = "&url=" + constants.URL_SERVER_PRE + "/api";
+      linkGenerado =  "firmaec://" +
         nombreDelSistema +
         "/firmar?token=" +
         miToken +
@@ -95,10 +93,10 @@ function urlParaIniciarFirmaEC(
 function urlExternaDelDocFirmado(nombrePdf) {
   var nombrePDFAnterior = nombrePdf;
   var nuevoNombreDePDF = nombrePDFAnterior.replace(".pdf", "-signed.pdf");
-  // Se usa urlServidorPre porque en este caso funciona para cualquier entorno.
+  // Se usa URL_SERVER_PRE porque en este caso funciona para cualquier entorno.
   var urlCompletaDeNuevoPDF =
-    firmarData.urlServidorPre + "/static/" + nuevoNombreDePDF;
-  // retorna una url como esta: http://localhost:8180/static/certificado-signed.pdf
+    constants.URL_SERVER_PRE + "/static/" + nuevoNombreDePDF;
+  // retorna una url como esta: https://pruebasmce.info/static/certificado-signed.pdf
 
   return urlCompletaDeNuevoPDF;
 }
@@ -114,13 +112,11 @@ function urlDirPDFAVerificar(valorParametroEsProduccion, rutaExternaDelDocFirmad
     var esProduccion = valorParametroEsProduccion.value;
     var urlAux = "";
     if (esProduccion === "true") {
-      urlAux =
-        firmarData.urlServidorProd +
+      urlAux =        constants.URL_SERVER_PROD +
         "/recepcion/rest?dirpdf=" +
         rutaExternaDelDocFirmado;
     } else {
-      urlAux =
-        firmarData.urlServidorPre +
+      urlAux =        constants.URL_SERVER_PRE +
         "/recepcion/rest?dirpdf=" +
         rutaExternaDelDocFirmado;
     }

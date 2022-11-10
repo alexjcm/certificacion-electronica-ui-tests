@@ -1,22 +1,10 @@
 /**
- * Devuelve la URL de la API para crear una instancia del proceso: Crear Evento Academico.
+ * Devuelve la URL de la API para crear una instancia del proceso: Crear o Editar Evento Academico.
  *
+ * @param {object}
  * @return {string}
  */
-function urlCrearEventoProceso(crearOEditarEventoProceso) {
-  if (crearOEditarEventoProceso && crearOEditarEventoProceso.length > 0) {
-    return (
-      "../API/bpm/process/" + crearOEditarEventoProceso[0].id + "/instantiation"
-    );
-  }
-}
-
-/**
- * Devuelve la URL de la API para crear una instancia del proceso: Editar Evento Academico.
- *
- * @return {string}
- */
-function urlEditarEventoProceso(crearOEditarEventoProceso) {
+function urlCrearOEditarEventoProceso(crearOEditarEventoProceso) {
   if (crearOEditarEventoProceso && crearOEditarEventoProceso.length > 0) {
     return (
       "../API/bpm/process/" + crearOEditarEventoProceso[0].id + "/instantiation"
@@ -28,35 +16,22 @@ function urlEditarEventoProceso(crearOEditarEventoProceso) {
  * Permite validar si todos los campos del formulario correspondiente han sido llenados,
  * retorna 'false' si todos los campos fueron llenados.
  *
+ * @param {object}
  * @return {boolean}
  */
-function formErrorEventoIncompleto(contratoEventoInput) {
-  var camposIncompletos =
-    !contratoEventoInput.nombre ||
-    !contratoEventoInput.tematica ||
-    !contratoEventoInput.lugar ||
-    !contratoEventoInput.horas ||
-    !contratoEventoInput.fechaDeInicio ||
-    !contratoEventoInput.fechaDeFinalizacion;
-  return camposIncompletos;
-}
-
-/**
- * Permite validar si todos los campos del formulario correspondiente han sido llenados,
- * retorna 'false' si todos los campos fueron llenados.
- *
- * @return {boolean}
- */
-function formErrorEventoEditarIncompleto(objetoEvento_selectedCopia) {
-  var camposEditIncompletos =
-    !objetoEvento_selectedCopia.nombre ||
-    !objetoEvento_selectedCopia.tematica ||
-    !objetoEvento_selectedCopia.lugar ||
-    !objetoEvento_selectedCopia.horas ||
-    !objetoEvento_selectedCopia.fechaDeInicio ||
-    !objetoEvento_selectedCopia.fechaDeFinalizacion ||
-    !objetoEvento_selectedCopia.persistenceId_string;
-  return camposEditIncompletos;
+function formErrorEventoCrearOEditarIncompleto(isEditing, evento) {
+  var eventIncomplete = null
+  if (isEditing) {
+    eventIncomplete = !evento.nombre || !evento.tematica ||
+      !evento.lugar || !evento.horas ||
+      !evento.fechaDeInicio || !evento.fechaDeFinalizacion ||
+      !evento.persistenceId_string;
+    return eventIncomplete;
+  }
+  eventIncomplete = !evento.nombre || !evento.tematica || !evento.lugar ||
+    !evento.horas || !evento.fechaDeInicio ||
+    !evento.fechaDeFinalizacion;
+  return eventIncomplete;
 }
 
 /**
@@ -109,11 +84,10 @@ function getEventoEditPayload(eventoEdit) {
     },
   };
 }
+
 module.exports = {
-  urlCrearEventoProceso,
-  urlEditarEventoProceso,
-  formErrorEventoIncompleto,
-  formErrorEventoEditarIncompleto,
+  urlCrearOEditarEventoProceso,
+  formErrorEventoCrearOEditarIncompleto,
   getEventoPayload,
   getEventoEditPayload,
 };
