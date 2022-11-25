@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "author": "alexjcm",
   "license": "ISC",
@@ -12,5 +13,8 @@
   },
   "jest": {
     "verbose": true
+  },
+  "dependencies": {
+    "jest-html-reporter": "^3.7.0"
   }
 }

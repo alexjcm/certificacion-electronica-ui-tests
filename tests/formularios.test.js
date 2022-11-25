@@ -13,39 +13,31 @@ const {
   urlDirPDFAVerificar,
 } = require("../scripts/formularios/firmarCertificado");
 
-
-//"d 'de' MMMM 'de' yyyy"
-
 describe(" Pruebas unitarias: Fechas de formulario generar certificado", () => {
-  test("Fecha de incio es menor a fecha Fin", () => {
+  test("Fecha de incio es menor a fecha de finalización", () => {
     expect(fechasValid("2021-10-18", "2021-10-19")).toBeTruthy();
     expect(fechasValid("Aug 9, 1995", "Aug 10, 1995")).toBeTruthy();
     expect(fechasValid("1995/01/01", "1996/02/17")).toBeTruthy();
-    expect(fechasValid("2018/01/30 23:30:14", "2018/01/30 23:30:15")
-    ).toBeTruthy();
-    expect(fechasValid("2021-05-29T02:40:56.328Z", "2021-05-29T02:40:56.330Z")
-    ).toBeTruthy();
+    expect(fechasValid("2018/01/30 23:30:14", "2018/01/30 23:30:15")).toBeTruthy();
+    expect(fechasValid("2021-05-29T02:40:56.328Z", "2021-05-29T02:40:56.330Z")).toBeTruthy();
     expect(fechasValid("Fri Aug 23 2018 00:23:31 GMT+0100",
-      "Fri Aug 24 2018 00:23:31 GMT+0100"
-    )).toBeTruthy();
+      "Fri Aug 24 2018 00:23:31 GMT+0100")).toBeTruthy();
   });
-  test("Fecha de incio es mayor o igual a fecha Fin", () => {
+  test("Fecha de incio es mayor o igual a fecha de finalización", () => {
     expect(fechasValid("2021-10-19", "2021-10-18")).toBeFalsy();
     expect(fechasValid("lunes, 27 de diciembre de 2050",
-      "lunes, 27 de diciembre de 2050"
-    )).toBeFalsy();
+      "lunes, 27 de diciembre de 2050")).toBeFalsy();
     expect(fechasValid("1996/02/17", "1995-01-01")).toBeFalsy();
-    expect(fechasValid("2018/01/30 23:30:14", "2018/01/30 23:30:12")
-    ).toBeFalsy();
-    expect(fechasValid("2021-05-29T02:40:56.300Z", "2021-05-29T02:40:56.300Z")
-    ).toBeFalsy();
-    expect(fechasValid("Fri Aug 25 2018 00:23:31 GMT+0100",
-      "Fri Aug 24 2018 00:23:31 GMT+0100"
+    expect(fechasValid("2018/01/30 23:30:14", "2018/01/30 23:30:12")).toBeFalsy();
+    expect(fechasValid("2021-05-29T02:40:56.300Z", "2021-05-29T02:40:56.300Z")).toBeFalsy();
+    expect(fechasValid("Fri Aug 25 2018 00:23:31 GMT+0100", "Fri Aug 24 2018 00:23:31 GMT+0100"
+    )).toBeFalsy();
+    expect(fechasValid("", "Fri Aug 24 2018 00:23:31 GMT+0100"
     )).toBeFalsy();
   });
 });
 
-describe(" Pruebas unitarias: Formulario solicitar certificado académico", () => {
+describe(" Pruebas unitarias: Formulario ver pdf generado", () => {
   test("Payload contiene lo esperado", () => {
     var result = getPayload("Generado").contratoEstadoPDF;
     expect(result).toBe("Generado");
@@ -93,16 +85,34 @@ describe(" Pruebas unitarias: Formulario firmar certificado académico", () => {
   });
 
   test("Se recibe la url esperada que inicia la aplicación FirmaEC", () => {
-    const url = "https://pruebasmce.info";
+    var url = "https://pruebasmce.info";
     var tokenAEnviar = { value: "xxxxxxxxxxxxxxxxxxxxxxx" };
     var parametroEsProduccion = { value: "false" };
     var tipoCertSeleccionado = "archivo";
-    var res = urlParaIniciarFirmaEC(tokenAEnviar, parametroEsProduccion, tipoCertSeleccionado
-    );
 
-    const urlEsperada = "firmaec://mce/firmar?token=" + tokenAEnviar.value + "&tipo_certificado=2&url=" +
+    var res = urlParaIniciarFirmaEC(tokenAEnviar, parametroEsProduccion, tipoCertSeleccionado);
+    var urlEsperada = "firmaec://mce/firmar?token=" + tokenAEnviar.value + "&tipo_certificado=2&url=" +
       url + "/api" + "&pre=true";
     expect(res).toBe(urlEsperada);
+
+    res = urlParaIniciarFirmaEC(tokenAEnviar, parametroEsProduccion, "token");
+    urlEsperada = "firmaec://mce/firmar?token=" + tokenAEnviar.value + "&tipo_certificado=1&url=" +
+      url + "/api" + "&pre=true";
+    expect(res).toBe(urlEsperada);
+
+    url = "https://ciscunl.info";
+    res = urlParaIniciarFirmaEC(tokenAEnviar, { value: "true" }, "token");
+    urlEsperada = "firmaec://mce/firmar?token=" + tokenAEnviar.value + "&tipo_certificado=1&url=" +
+      url + "/api" + "&pre=true";
+    expect(res).toBe(urlEsperada);
+
+    res = urlParaIniciarFirmaEC(tokenAEnviar, { value: "true" }, "archivo");
+    urlEsperada = "firmaec://mce/firmar?token=" + tokenAEnviar.value + "&tipo_certificado=2&url=" +
+      url + "/api" + "&pre=true";
+    expect(res).toBe(urlEsperada);
+
+    res = urlParaIniciarFirmaEC("", { value: "true" }, "token");
+    expect(res).toBeNull();
   });
 
   test("Se recibe la url correcta del documento", () => {
@@ -115,10 +125,14 @@ describe(" Pruebas unitarias: Formulario firmar certificado académico", () => {
     var url = "https://pruebasmce.info";
     var parametroEsProduccion = { value: "false" };
     var rutaExternaDelDocFirmado = "/opt/wildfly-static/certificado-signed.pdf";
-    var res = urlDirPDFAVerificar(parametroEsProduccion, rutaExternaDelDocFirmado
-    );
-    const urlEsperada =
-      url + "/recepcion/rest?dirpdf=" + rutaExternaDelDocFirmado;
+    var res = urlDirPDFAVerificar(parametroEsProduccion, rutaExternaDelDocFirmado);
+    var urlEsperada = url + "/recepcion/rest?dirpdf=" + rutaExternaDelDocFirmado;
+    expect(res).toBe(urlEsperada);
+
+    url = "https://ciscunl.info";
+    parametroEsProduccion = { value: "true" };
+    res = urlDirPDFAVerificar(parametroEsProduccion, rutaExternaDelDocFirmado)
+    urlEsperada = url + "/recepcion/rest?dirpdf=" + rutaExternaDelDocFirmado;
     expect(res).toBe(urlEsperada);
   });
 });

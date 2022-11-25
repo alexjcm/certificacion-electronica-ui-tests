@@ -38,9 +38,7 @@ function rutaExternaDelDocFirmado(nombrePdf) {
  *
  * @return {string}
  */
-function urlParaIniciarFirmaEC(
-  valorVpTokenAEnviar,
-  valorParametroEsProduccion,
+function urlParaIniciarFirmaEC(valorVpTokenAEnviar, valorParametroEsProduccion,
   tipoCertSeleccionado
 ) {
   if (valorVpTokenAEnviar && valorParametroEsProduccion) {
@@ -48,39 +46,35 @@ function urlParaIniciarFirmaEC(
     var miToken = valorVpTokenAEnviar.value;
     var tipoCertificado = "";
     var tipoEstampado = ""; // invisible
-    if (tipoCertSeleccionado && tipoCertSeleccionado === "token") {
+    if (tipoCertSeleccionado === "token") {
       tipoCertificado = "&tipo_certificado=1";
-    } else if (!tipoCertSeleccionado || tipoCertSeleccionado === "archivo") {
+    } else if (tipoCertSeleccionado === "archivo") {
       tipoCertificado = "&tipo_certificado=2";
     }
     var linkGenerado = "";
     var isProduction = valorParametroEsProduccion.value;
     if (isProduction === "true") {
-      // URL PRODUCCION
       const urlApiProd = "&url=" + constants.URL_SERVER_PROD + "/api";
-      linkGenerado = "firmaec://" +
-        nombreDelSistema +
-        "/firmar?token=" +
-        miToken +
+      linkGenerado = "firmaec://" + nombreDelSistema +
+        "/firmar?token=" + miToken +
         tipoCertificado +
         urlApiProd +
         tipoEstampado +
         "&pre=true";
     } else {
       const urlApiPre = "&url=" + constants.URL_SERVER_PRE + "/api";
-      linkGenerado =  "firmaec://" +
-        nombreDelSistema +
-        "/firmar?token=" +
-        miToken +
+      linkGenerado = "firmaec://" + nombreDelSistema +
+        "/firmar?token=" + miToken +
         tipoCertificado +
         urlApiPre +
         tipoEstampado +
         "&pre=true";
     }
 
-    // firmaec://mce/firmar?token=XXXXXXXX&tipo_certificado=2&url=http://....&pre=true
     return linkGenerado;
   }
+
+  return null
 }
 
 /**
@@ -93,11 +87,9 @@ function urlParaIniciarFirmaEC(
 function urlExternaDelDocFirmado(nombrePdf) {
   var nombrePDFAnterior = nombrePdf;
   var nuevoNombreDePDF = nombrePDFAnterior.replace(".pdf", "-signed.pdf");
-  // Se usa URL_SERVER_PRE porque en este caso funciona para cualquier entorno.
-  var urlCompletaDeNuevoPDF =
-    constants.URL_SERVER_PRE + "/static/" + nuevoNombreDePDF;
-  // retorna una url como esta: https://pruebasmce.info/static/certificado-signed.pdf
+  var urlCompletaDeNuevoPDF = constants.URL_SERVER_PRE + "/static/" + nuevoNombreDePDF;
 
+  // retorna una url como esta: https://pruebasmce.info/static/certificado-signed.pdf
   return urlCompletaDeNuevoPDF;
 }
 
@@ -112,12 +104,10 @@ function urlDirPDFAVerificar(valorParametroEsProduccion, rutaExternaDelDocFirmad
     var esProduccion = valorParametroEsProduccion.value;
     var urlAux = "";
     if (esProduccion === "true") {
-      urlAux =        constants.URL_SERVER_PROD +
-        "/recepcion/rest?dirpdf=" +
+      urlAux = constants.URL_SERVER_PROD + "/recepcion/rest?dirpdf=" +
         rutaExternaDelDocFirmado;
     } else {
-      urlAux =        constants.URL_SERVER_PRE +
-        "/recepcion/rest?dirpdf=" +
+      urlAux = constants.URL_SERVER_PRE + "/recepcion/rest?dirpdf=" +
         rutaExternaDelDocFirmado;
     }
 

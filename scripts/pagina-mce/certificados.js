@@ -14,7 +14,7 @@ const LIST_FUNCTIONARY_SIGNING = [
  * @param {object}
  * @return {string}
  */
-function tempQuienFirma(certificadoSelected) {
+function quienFirma(certificadoSelected) {
   var noFirmaDecano = certificadoSelected.firmaSecretaria &&
     certificadoSelected.firmaGestor &&
     certificadoSelected.firmaDecano === false;
@@ -61,7 +61,7 @@ function formErrorCrearOEditarCertificadoIncompleto(isEditing, certificado) {
   certificateIncomplete = !certificado.idCert || !certificado.nombre || !certificado.descripcion;
   if (certificado.idCert > 4) {
     return (
-      certificateIncomplete || !tempQuienFirma(certificado)
+      certificateIncomplete || !quienFirma(certificado)
     );
   }
   return certificateIncomplete;
@@ -75,7 +75,7 @@ function formErrorCrearOEditarCertificadoIncompleto(isEditing, certificado) {
  * @param {object}
  * @return {json}
  */
-function getCertificadoPayload(contratoCertificadoNuevo, auxQuienFirma, objetoCertificado) {
+function getCertificadoPayload(contratoCertificadoNuevo, auxQuienFirma, listaCertificados) {
   if (auxQuienFirma === LIST_FUNCTIONARY_SIGNING[0]) {
     contratoCertificadoNuevo.firmaSecretaria = true;
     contratoCertificadoNuevo.firmaGestor = true;
@@ -86,7 +86,7 @@ function getCertificadoPayload(contratoCertificadoNuevo, auxQuienFirma, objetoCe
     contratoCertificadoNuevo.firmaDecano = false;
   }
 
-  var sizeListaObjCertificados = objetoCertificado.length;
+  var sizeListaObjCertificados = listaCertificados.length;
   var idCertAutoIncremento = sizeListaObjCertificados + 1;
   contratoCertificadoNuevo.idCert = idCertAutoIncremento;
 
@@ -112,13 +112,13 @@ function getCertificadoPayload(contratoCertificadoNuevo, auxQuienFirma, objetoCe
  */
 function getCertificadoEditPayload(certificadoEdit, certificadoSelected) {
   if (
-    tempQuienFirma(certificadoSelected) === LIST_FUNCTIONARY_SIGNING[0]
+    quienFirma(certificadoSelected) === LIST_FUNCTIONARY_SIGNING[0]
   ) {
     certificadoEdit.firmaSecretaria = true;
     certificadoEdit.firmaGestor = true;
     certificadoEdit.firmaDecano = false;
   } else if (
-    tempQuienFirma(certificadoSelected) === LIST_FUNCTIONARY_SIGNING[1]
+    quienFirma(certificadoSelected) === LIST_FUNCTIONARY_SIGNING[1]
   ) {
     certificadoEdit.firmaGestor = true;
     certificadoEdit.firmaSecretaria = false;
@@ -145,7 +145,7 @@ function getCertificadoEditPayload(certificadoEdit, certificadoSelected) {
 }
 
 module.exports = {
-  tempQuienFirma,
+  quienFirma,
   urlCrearOEditarCertificadoProceso,
   formErrorCrearOEditarCertificadoIncompleto,
   getCertificadoPayload,

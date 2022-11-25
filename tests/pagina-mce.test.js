@@ -9,7 +9,7 @@ const {
   getEventoEditPayload,
 } = require("../scripts/pagina-mce/eventos");
 const {
-  tempQuienFirma,
+  quienFirma,
   urlCrearOEditarCertificadoProceso,
   formErrorCrearOEditarCertificadoIncompleto,
   getCertificadoPayload,
@@ -71,6 +71,10 @@ describe(" Pruebas unitarias: Página MCE - prerrequisitos", () => {
       persistenceId: 123,
     };
     var res = getCreateOrEditParamPayload(contratoParam);
+    expect(res.contratoParametro).toEqual(contratoParam);
+
+    contratoParam.persistenceId = null
+    res = getCreateOrEditParamPayload(contratoParam);
     expect(res.contratoParametro).toEqual(contratoParam);
   });
 });
@@ -182,22 +186,21 @@ describe(" Pruebas unitarias: Página MCE - certificados", () => {
       firmaDecano: false,
     };
 
-    var res = tempQuienFirma(certificadoSelected);
+    var res = quienFirma(certificadoSelected);
     expect(res).toBe(LIST_FUNCTIONARY_SIGNING[1]);
     certificadoSelected = {
       firmaSecretaria: true,
       firmaGestor: true,
       firmaDecano: false,
     };
-    res = tempQuienFirma(certificadoSelected);
+    res = quienFirma(certificadoSelected);
     expect(res).toBe(LIST_FUNCTIONARY_SIGNING[0]);
   });
 
   test("Contiene la url correcta", () => {
     var crearOEditarCertificadoProceso = [{ id: "123" }];
     var res = urlCrearOEditarCertificadoProceso(crearOEditarCertificadoProceso);
-    var esperado = "../API/bpm/process/" +
-      crearOEditarCertificadoProceso[0].id +
+    var esperado = "../API/bpm/process/" + crearOEditarCertificadoProceso[0].id +
       "/instantiation";
     expect(res).toBe(esperado);
   });
@@ -211,9 +214,11 @@ describe(" Pruebas unitarias: Página MCE - certificados", () => {
       firmaGestor: true,
       firmaDecano: false,
     };
-    var res = formErrorCrearOEditarCertificadoIncompleto(false,
-      certificado
-    );
+    var res = formErrorCrearOEditarCertificadoIncompleto(false, certificado);
+    expect(res).toBeFalsy();
+
+    certificado.idCert = 4
+     res = formErrorCrearOEditarCertificadoIncompleto(false, certificado);
     expect(res).toBeFalsy();
   });
 
@@ -221,6 +226,7 @@ describe(" Pruebas unitarias: Página MCE - certificados", () => {
     var certificado = {
       nombre: "alfa",
       descripcion: "beta",
+      idCert: 4,
       firmaSecretaria: false,
       firmaGestor: true,
       firmaDecano: false,
@@ -241,12 +247,21 @@ describe(" Pruebas unitarias: Página MCE - certificados", () => {
       firmaGestor: true,
       firmaDecano: false,
     };
-    var auxQuienFirma = "Firman la Secretaria y el Gestor";
-    var objetoCertificado = [0, 0, 0, 0];
+    var responsableDeFirmar = "Firman la Secretaria y el Gestor";
+    var listaCertiicados = [0, 0, 0, 0];
     var res = getCertificadoPayload(
       contratoCertificadoNuevo,
-      auxQuienFirma,
-      objetoCertificado
+      responsableDeFirmar,
+      listaCertiicados
+    );
+    expect(res.contratoCertificadoNuevo).toEqual(contratoCertificadoNuevo);
+    expect(res.contratoCertificadoEdit.idCert).toBeNull();
+
+    responsableDeFirmar = "Firma el Gestor";
+    res = getCertificadoPayload(
+      contratoCertificadoNuevo,
+      responsableDeFirmar,
+      listaCertiicados
     );
     expect(res.contratoCertificadoNuevo).toEqual(contratoCertificadoNuevo);
     expect(res.contratoCertificadoEdit.idCert).toBeNull();
@@ -270,6 +285,15 @@ describe(" Pruebas unitarias: Página MCE - certificados", () => {
       firmaDecano: false,
     };
     var res = getCertificadoEditPayload(
+      certificadoEdit,
+      certificadoSelected
+    );
+
+    expect(res.contratoCertificadoEdit).toEqual(certificadoSelected);
+    expect(res.contratoCertificadoNuevo.idCert).toBeNull();
+
+    certificadoSelected.firmaSecretaria = false
+    res = getCertificadoEditPayload(
       certificadoEdit,
       certificadoSelected
     );

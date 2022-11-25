@@ -6,8 +6,7 @@
  */
 function getCreateOrEditParamPayload(parametro) {
     if (parametro.persistenceId === "" || parametro.persistenceId === null) {
-        console.log("Se va a crear el parametro")
-
+        parametro.id = 12
     }
 
     return {

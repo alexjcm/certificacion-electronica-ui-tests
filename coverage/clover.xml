@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1668143516827" clover="3.2.0">
+  <project timestamp="1668143516827" name="All files">
+    <metrics statements="107" coveredstatements="107" conditionals="87" coveredconditionals="80" methods="21" coveredmethods="21" elements="215" coveredelements="208" complexity="0" loc="107" ncloc="107" packages="2" files="7" classes="7"/>
+    <package name="formularios">
+      <metrics statements="47" coveredstatements="47" conditionals="22" coveredconditionals="20" methods="10" coveredmethods="10"/>
+      <file name="firmarCertificado.js" path="/home/ajcm/Downloads/bonita/certificacion-electronica-ui-tests/scripts/formularios/firmarCertificado.js">
+        <metrics statements="36" coveredstatements="36" conditionals="14" coveredconditionals="12" methods="5" coveredmethods="5"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="44" count="5" type="cond" truecount="4" falsecount="0"/>
+        <line num="45" count="4" type="stmt"/>
+        <line num="46" count="4" type="stmt"/>
+        <line num="47" count="4" type="stmt"/>
+        <line num="48" count="4" type="stmt"/>
+        <line num="49" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="50" count="2" type="stmt"/>
+        <line num="51" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="52" count="2" type="stmt"/>
+        <line num="54" count="4" type="stmt"/>
+        <line num="55" count="4" type="stmt"/>
+        <line num="56" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="57" count="2" type="stmt"/>
+        <line num="58" count="2" type="stmt"/>
+        <line num="65" count="2" type="stmt"/>
+        <line num="66" count="2" type="stmt"/>
+        <line num="74" count="4" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="88" count="1" type="stmt"/>
+        <line num="89" count="1" type="stmt"/>
+        <line num="90" count="1" type="stmt"/>
+        <line num="93" count="1" type="stmt"/>
+        <line num="103" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="104" count="2" type="stmt"/>
+        <line num="105" count="2" type="stmt"/>
+        <line num="106" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="107" count="1" type="stmt"/>
+        <line num="110" count="1" type="stmt"/>
+        <line num="115" count="2" type="stmt"/>
+        <line num="119" count="1" type="stmt"/>
+      </file>
+      <file name="generarCertificado.js" path="/home/ajcm/Downloads/bonita/certificacion-electronica-ui-tests/scripts/formularios/generarCertificado.js">
+        <metrics statements="4" coveredstatements="4" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="9" count="13" type="cond" truecount="4" falsecount="0"/>
+        <line num="10" count="12" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+      </file>
+      <file name="revisionDeSolicitud.js" path="/home/ajcm/Downloads/bonita/certificacion-electronica-ui-tests/scripts/formularios/revisionDeSolicitud.js">
+        <metrics statements="5" coveredstatements="5" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="15" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="45" count="1" type="stmt"/>
+      </file>
+      <file name="verPdfGenerado.js" path="/home/ajcm/Downloads/bonita/certificacion-electronica-ui-tests/scripts/formularios/verPdfGenerado.js">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="pagina-mce">
+      <metrics statements="60" coveredstatements="60" conditionals="65" coveredconditionals="60" methods="11" coveredmethods="11"/>
+      <file name="certificados.js" path="/home/ajcm/Downloads/bonita/certificacion-electronica-ui-tests/scripts/pagina-mce/certificados.js">
+        <metrics statements="39" coveredstatements="39" conditionals="34" coveredconditionals="30" methods="5" coveredmethods="5"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="18" count="6" type="cond" truecount="3" falsecount="0"/>
+        <line num="21" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="24" count="4" type="cond" truecount="3" falsecount="0"/>
+        <line num="27" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="28" count="4" type="stmt"/>
+        <line num="39" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="55" count="3" type="stmt"/>
+        <line num="56" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="57" count="1" type="cond" truecount="3" falsecount="0"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="61" count="2" type="cond" truecount="3" falsecount="0"/>
+        <line num="62" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="67" count="1" type="stmt"/>
+        <line num="79" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="80" count="1" type="stmt"/>
+        <line num="81" count="1" type="stmt"/>
+        <line num="82" count="1" type="stmt"/>
+        <line num="83" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="84" count="1" type="stmt"/>
+        <line num="85" count="1" type="stmt"/>
+        <line num="86" count="1" type="stmt"/>
+        <line num="89" count="2" type="stmt"/>
+        <line num="90" count="2" type="stmt"/>
+        <line num="91" count="2" type="stmt"/>
+        <line num="93" count="2" type="stmt"/>
+        <line num="114" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="117" count="1" type="stmt"/>
+        <line num="118" count="1" type="stmt"/>
+        <line num="119" count="1" type="stmt"/>
+        <line num="120" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="123" count="1" type="stmt"/>
+        <line num="124" count="1" type="stmt"/>
+        <line num="125" count="1" type="stmt"/>
+        <line num="127" count="2" type="stmt"/>
+        <line num="147" count="1" type="stmt"/>
+      </file>
+      <file name="eventos.js" path="/home/ajcm/Downloads/bonita/certificacion-electronica-ui-tests/scripts/pagina-mce/eventos.js">
+        <metrics statements="11" coveredstatements="11" conditionals="19" coveredconditionals="18" methods="4" coveredmethods="4"/>
+        <line num="8" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="24" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="2" type="cond" truecount="7" falsecount="0"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="31" count="2" type="cond" truecount="6" falsecount="0"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="66" count="2" type="stmt"/>
+        <line num="88" count="1" type="stmt"/>
+      </file>
+      <file name="prerrequisitos.js" path="/home/ajcm/Downloads/bonita/certificacion-electronica-ui-tests/scripts/pagina-mce/prerrequisitos.js">
+        <metrics statements="10" coveredstatements="10" conditionals="12" coveredconditionals="12" methods="2" coveredmethods="2"/>
+        <line num="8" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="33" count="4" type="stmt"/>
+        <line num="34" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="35" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="40" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="41" count="2" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
